@@ -12,7 +12,11 @@ class Farm
 
 	public function addAnimal($animal)
 	{
-		$this->animals[] = $animal;
+		if (is_subclass_of($animal, 'Animal')) {
+			$this->animals[] = $animal;
+		} else {
+			throw new Exception('Only animals can enter the farm');
+		}
 	}
 
 	public function getAnimalIds()
@@ -28,7 +32,7 @@ class Farm
 	{
 		foreach ($this->animals as $animal) {
 			$product = $animal->getProduct();
-			$this->products[$product['ProductName']] += $product['ProductQuantity'];
+			$this->products[$product->name] += $product->quantity;
 		}
 		return $this->products;
 	}

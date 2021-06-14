@@ -5,20 +5,13 @@ require_once 'Classes/Animal.php';
 require_once 'Classes/Cow.php';
 require_once 'Classes/Hen.php';
 
-$allAnimals = [];
-
+$farm = new Farm();
 for ($i=0; $i < 20; $i++) { 
-	$allAnimals[] = new Hen();
+	$farm->addAnimal(new Hen());
 }
 
 for ($i=0; $i < 10; $i++) { 
-	$allAnimals[] = new Cow();
-}
-
-$farm = new Farm();
-
-foreach ($allAnimals as $animal) {
-	$farm->addAnimal($animal);
+	$farm->addAnimal(new Cow());
 }
 
 $farm->CollectionOfProducts();

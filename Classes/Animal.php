@@ -3,14 +3,15 @@ class Animal
 {
 	private $id;
 	private	$productName;
-	// Переменная outputRange предназначена для хранения минимального и максимального количества продуктов производимых животным за 1 раз
-	private $outputRange;
+	private $minOutputQuantityPrdc;
+	private $maxnOutputQuantityPrdc;
 
-	function __construct($productName, $outputRange)
+	function __construct($productName, $minOutputQuantityPrdc, $maxnOutputQuantityPrdc)
 	{
-		$this->id 		   = uniqid();
-		$this->productName = $productName;
-		$this->outputRange = $outputRange;
+		$this->id 		   			  = uniqid();
+		$this->productName            = $productName;
+		$this->minOutputQuantityPrdc  = $minOutputQuantityPrdc;
+		$this->maxnOutputQuantityPrdc = $maxnOutputQuantityPrdc;
 	}
 
 	public function getId()
@@ -25,8 +26,17 @@ class Animal
 
 	public function getProduct()
 	{
-		$product = random_int($this->outputRange[0], $this->outputRange[1]);
-		print("The animal gave ${product} products \n");
-		return array('ProductName' => $this->productName, 'ProductQuantity' => $product);
+		$productQuantity = random_int($this->minOutputQuantityPrdc, $this->maxnOutputQuantityPrdc);
+		print("We got ${productQuantity} products from " . get_class($this) . "\n");
+		$product =  new class($this->productName, $productQuantity) {
+			public $name;
+			public $quantity;
+			public function __construct($name, $productQuantity)
+			{
+				$this->name = $name;
+				$this->quantity = $productQuantity;
+			}
+		};
+		return $product;
 	}
 }
